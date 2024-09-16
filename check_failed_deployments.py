@@ -5,7 +5,7 @@ import os
 
 # GitHub repository info
 OWNER = 'abcthedev'  # Replace with your GitHub username
-REPO = 'githuDeployScript'  # Replace with your repository name
+REPO = 'storeFailedDeploymentsToExcel'  # Replace with your repository name
 TOKEN = os.environ['TOKEN'] # Replace with your GitHub personal access token
 
 # API URL to fetch deployments
