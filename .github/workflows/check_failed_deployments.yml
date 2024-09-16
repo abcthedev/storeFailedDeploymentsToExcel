@@ -1,0 +1,37 @@
+name: Check Failed Deployments
+
+on:
+  # Trigger the workflow on push to the main branch or manually via workflow_dispatch
+  push:
+    branches:
+      - master
+
+jobs:
+  check-failed-deployments:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          pip install requests openpyxl
+
+      - name: Run check_failed_deployments.py
+        env:
+          TOKEN: ${{ secrets.TOKEN_A }} #Access the token from github secrets to py file
+        run: |
+          python check_failed_deployments.py
+
+      - name: Upload failed deployments report
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-deployments
+          path: failed_deployments.xlsx
